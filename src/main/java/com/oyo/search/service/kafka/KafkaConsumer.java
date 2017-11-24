@@ -2,6 +2,7 @@ package com.oyo.search.service.kafka;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +16,7 @@ import com.oyo.search.util.TransformUtil;
  * search hotels service {@literal Topic}.
  */
 @Service
-//@ConditionalOnProperty("true")
+@ConditionalOnProperty("kafka.enabled")
 public class KafkaConsumer {
 
 	private static final Logger log = LoggerFactory.getLogger(KafkaConsumer.class);
