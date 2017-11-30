@@ -3,13 +3,24 @@ package com.oyo.search.pojo;
 public class TriggerDataModel extends DateRange {
 	
 	private static final long serialVersionUID = 7687078979133662759L;
+	
 	int[] hotel_ids;
 	boolean delete;
 	String type;
 	String log_type;
 	String source;
 	DateRange dates;
+	Data[] data;
 	
+	public Data[] getData() {
+		return data;
+	}
+	public void setData(Data[] data) {
+		this.data = data;
+	}
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 	public int[] getHotel_ids() {
 		return hotel_ids;
 	}
@@ -46,5 +57,47 @@ public class TriggerDataModel extends DateRange {
 	public void setDates(DateRange dates) {
 		this.dates = dates;
 	}
-
+	
+	static class Data {
+		String field_name;
+		String value;
+		
+		public String getField_name() {
+			return field_name;
+		}
+		public void setField_name(String field_name) {
+			this.field_name = field_name;
+		}
+		public String getValue() {
+			return value;
+		}
+		public void setValue(String value) {
+			this.value = value;
+		}
+		
+		@Override
+		public String toString () {
+			return "Field name : " + field_name + ", value : " + value;
+		}
+		
+	}
+	
+	@Override
+	public String toString () {
+		String hotelIds = "";
+		for (int i : hotel_ids) {
+			hotelIds = hotelIds + ", " + i;
+		}
+		String str = "Hotel ids : " + hotelIds.substring(2) + ", log type : " + log_type + ", source : " + source + ", type : " + type + ", delete : " + delete;
+		str = dates == null ? str : str + ", dates : " + dates.toString();
+		if (data != null) {
+			String data_str = "";
+			for (Data curr_data: data) {
+				data_str = data_str + "{ " + curr_data.toString() + " }, ";
+			}
+			str = data_str.length() < 3 ? str : str + ", data : [ " + data_str.substring(0, data_str.length() - 2) + " ]";
+		}
+		return str;
+	}
+	
 }

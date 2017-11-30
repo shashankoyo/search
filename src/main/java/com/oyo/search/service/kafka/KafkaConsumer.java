@@ -32,11 +32,12 @@ public class KafkaConsumer {
 			kafkaMessage = ParseSysLogService.getParsedResponse(kafkaMessage);
 			System.out.println("KafkaConsumerService: Message processed: " + kafkaMessage);
 			triggerDataModel = (TriggerDataModel) TransformUtil.fromJson(kafkaMessage, TriggerDataModel.class);
-			System.out.println("Message processed : " + triggerDataModel.toString());
 		} catch (Exception e) {
 			log.info("KafkaConsumerService: KafkaListener:- {} for data {} with error message {}",
-					Constants.JSON_PARSE_ERROR, kafkaMessage, e.getMessage());
+					Constants.JSON_PARSE_ERROR, kafkaMessage, e.getStackTrace());
+			return;
 		}
+		System.out.println("Message processed : " + triggerDataModel.toString());
 
 	}
 
