@@ -12,14 +12,14 @@ import com.oyo.search.pojo.TriggerDataModel;
 import com.oyo.search.util.TransformUtil;
 
 /**
- * The {@code KafkaConsumer} represents listener for
+ * The {@code SearchTriggerListener} represents listener for
  * search hotels service {@literal Topic}.
  */
 @Service
 @ConditionalOnProperty("kafka.enabled")
-public class KafkaConsumer {
+public class SearchTriggerListener {
 
-	private static final Logger log = LoggerFactory.getLogger(KafkaConsumer.class);
+	private static final Logger log = LoggerFactory.getLogger(SearchTriggerListener.class);
 
 	private TriggerDataModel triggerDataModel;
 
