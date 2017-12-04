@@ -1,12 +1,12 @@
-package com.oyo.search.service.kafka;
+package com.oyo.search.util;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * The {@code ParseSysLogService} class represents log parser.
+ * The {@code ParseSysLogUtil} class represents log parser.
  */
-public class ParseSysLogService {
+public class ParseSysLogUtil {
 
 	/**
 	 * Removes {@literal Timestamp} from the given {@code String} message.

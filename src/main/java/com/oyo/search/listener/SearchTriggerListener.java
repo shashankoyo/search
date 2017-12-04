@@ -1,4 +1,4 @@
-package com.oyo.search.service.kafka;
+package com.oyo.search.listener;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,7 +9,9 @@ import org.springframework.stereotype.Service;
 import com.newrelic.api.agent.Trace;
 import com.oyo.search.constants.Constants;
 import com.oyo.search.pojo.TriggerDataModel;
+import com.oyo.search.util.ParseSysLogUtil;
 import com.oyo.search.util.TransformUtil;
+import com.oyo.search.service.SearchTriggerConsumerService;
 
 /**
  * The {@code SearchTriggerListener} represents listener for
@@ -29,16 +31,17 @@ public class SearchTriggerListener {
 		log.info("KafkaConsumerService: Message received: {}", kafkaMessage);
 		System.out.println("KafkaConsumerService: Message received: " + kafkaMessage);
 		try {
-			kafkaMessage = ParseSysLogService.getParsedResponse(kafkaMessage);
+			kafkaMessage = ParseSysLogUtil.getParsedResponse(kafkaMessage);
 			System.out.println("KafkaConsumerService: Message processed: " + kafkaMessage);
 			triggerDataModel = (TriggerDataModel) TransformUtil.fromJson(kafkaMessage, TriggerDataModel.class);
+			System.out.println("Message processed : " + triggerDataModel.toString());
 		} catch (Exception e) {
 			log.info("KafkaConsumerService: KafkaListener:- {} for data {} with error message {}",
 					Constants.JSON_PARSE_ERROR, kafkaMessage, e.getStackTrace());
 			return;
 		}
-		System.out.println("Message processed : " + triggerDataModel.toString());
-
+		SearchTriggerConsumerService searchTriggerConsumerService = new SearchTriggerConsumerService();
+		searchTriggerConsumerService.consume(triggerDataModel);
 	}
 
 }
