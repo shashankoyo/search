@@ -10,25 +10,25 @@ import com.oyo.search.pojo.AbstractPojo;
 import com.oyo.search.pojo.TriggerDataModel;
 
 public class SearchTriggerConsumerService {
-	
+
 	private static final Logger log = LoggerFactory.getLogger(SearchTriggerListener.class);
-	
-	public void consume (final TriggerDataModel triggerObj) {
+
+	public void consume(final TriggerDataModel triggerObj) {
 		if (!(validateType(triggerObj) && validateClass(triggerObj))) {
 			log.info("Invalid type or class.");
 			return;
 		}
-		if(triggerObj.getType().equalsIgnoreCase("push")) {
-			//fit data in model as per class
-		} else if(triggerObj.getType().equalsIgnoreCase("pull")) {
+		if (triggerObj.getType().equalsIgnoreCase("push")) {
+			// fit data in model as per class
+		} else if (triggerObj.getType().equalsIgnoreCase("pull")) {
 			SearchDataRetrievalService searchDataRetrievalService = new SearchDataRetrievalService();
 			AbstractPojo pojo = searchDataRetrievalService.getDataFromExternalApi(triggerObj.getSource(), triggerObj.getData_unique_id());
 			log.info("Data received : " + pojo.toString());
 		}
-		
+
 	}
-	
-	private boolean validateType (final TriggerDataModel triggerObj) {
+
+	private boolean validateType(final TriggerDataModel triggerObj) {
 		if (triggerObj.getType().equalsIgnoreCase("pull")) {
 			return true;
 		} else if (triggerObj.getType().equalsIgnoreCase("push")) {
@@ -39,12 +39,12 @@ public class SearchTriggerConsumerService {
 			return false;
 		}
 	}
-	
+
 	private boolean validateClass(final TriggerDataModel triggerObj) {
 		SearchClassType sourceClass = SearchClassType.findByValue(triggerObj.getSource());
 		if (sourceClass == null)
 			return false;
 		return true;
 	}
-	
+
 }

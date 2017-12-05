@@ -14,8 +14,8 @@ import com.oyo.search.util.TransformUtil;
 import com.oyo.search.service.SearchTriggerConsumerService;
 
 /**
- * The {@code SearchTriggerListener} represents listener for
- * search hotels service {@literal Topic}.
+ * The {@code SearchTriggerListener} represents listener for search hotels
+ * service {@literal Topic}.
  */
 @Service
 @ConditionalOnProperty("kafka.enabled")
@@ -36,8 +36,8 @@ public class SearchTriggerListener {
 			triggerDataModel = (TriggerDataModel) TransformUtil.fromJson(kafkaMessage, TriggerDataModel.class);
 			System.out.println("Message processed : " + triggerDataModel.toString());
 		} catch (Exception e) {
-			log.info("KafkaConsumerService: KafkaListener:- {} for data {} with error message {}",
-					Constants.JSON_PARSE_ERROR, kafkaMessage, e.getStackTrace());
+			log.info("KafkaConsumerService: KafkaListener:- {} for data {} with error message {}", Constants.JSON_PARSE_ERROR, kafkaMessage,
+					e.getStackTrace());
 			return;
 		}
 		SearchTriggerConsumerService searchTriggerConsumerService = new SearchTriggerConsumerService();
